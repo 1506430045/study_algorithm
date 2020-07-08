@@ -489,3 +489,34 @@ func max(a, b int) int {
 	}
 	return b
 }
+
+func ConvertBiNode(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+	var head, rear *TreeNode
+	s := stack.InitStack()
+	cur := root
+	for !s.Empty() || cur != nil {
+		if cur != nil {
+			s.Push(cur)
+			cur = cur.Left
+		} else {
+			node := s.Pop().(*TreeNode)
+			resNode := &TreeNode{
+				Val:   node.Val,
+				Left:  nil,
+				Right: nil,
+			}
+			if head == nil {
+				head = resNode
+				rear = head
+			} else {
+				rear.Right = resNode
+				rear = rear.Right
+			}
+			cur = node.Right
+		}
+	}
+	return head
+}

@@ -1,6 +1,6 @@
 package sort
 
-func adjustHeap(arr []int, pos int, length int) {
+func AdjustHeap(arr []int, pos int, length int) {
 	for {
 		//计算孩子位置
 		child := pos*2 + 1
@@ -25,32 +25,32 @@ func adjustHeap(arr []int, pos int, length int) {
 	}
 }
 
-func buildHeap(arr []int) {
+func BuildHeap(arr []int) {
 	//从底层向上层构建，len(a)/2-1是第一个父节点
 	for i := len(arr)/2 - 1; i >= 0; i-- {
-		adjustHeap(arr, i, len(arr))
+		AdjustHeap(arr, i, len(arr))
 	}
 }
 
 func HeapSort(arr []int) {
 	//构建大顶堆
-	buildHeap(arr)
+	BuildHeap(arr)
 
 	//首尾交换 重新构建打顶堆
 	for i := len(arr) - 1; i >= 0; i-- {
 		arr[i], arr[0] = arr[0], arr[i]
-		adjustHeap(arr, 0, i)
+		AdjustHeap(arr, 0, i)
 	}
 }
 
 func getLeastNumbers(arr []int, k int) []int {
-	buildHeap(arr[0:k])
+	BuildHeap(arr[0:k])
 	for i := k; i < len(arr); i++ {
 		if arr[i] > arr[0] { //大于堆顶元素 不需要调整
 			continue
 		}
 		arr[0], arr[i] = arr[i], arr[0]
-		adjustHeap(arr[0:k], 0, k)
+		AdjustHeap(arr[0:k], 0, k)
 	}
 	return arr[0:k]
 }
