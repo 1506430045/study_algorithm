@@ -135,3 +135,89 @@ func isPalindrome(head *ListNode) bool {
 
 	return false
 }
+
+func reversePrint(head *ListNode) []int {
+	res := make([]int, 0)
+	for head != nil {
+		res = append(res, head.Val)
+		head = head.Next
+	}
+	length := len(res)
+	for i := 0; i < length/2; i++ {
+		res[i], res[length-1-i] = res[length-1-i], res[i]
+	}
+	return res
+}
+
+func deleteNode(head *ListNode, val int) *ListNode {
+	if head == nil {
+		return nil
+	}
+	if head.Val == val {
+		return head.Next
+	}
+	cur := head
+	prev := head
+	for cur != nil {
+		if cur.Val == val {
+			prev.Next = cur.Next
+		}
+		prev = cur
+		cur = cur.Next
+	}
+	return head
+}
+
+func reverseList(head *ListNode) *ListNode {
+	var prev, temp *ListNode
+	var cur = head
+
+	for cur != nil {
+		temp = cur.Next
+		cur.Next = prev
+		prev = cur
+		cur = temp
+	}
+	return prev
+}
+
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+	if l1 == nil {
+		return l2
+	}
+	if l2 == nil {
+		return l1
+	}
+	var head, rear, node *ListNode
+	var v int
+	for l1 != nil || l2 != nil {
+
+		if l1 != nil && l2 != nil { //l1、l2都不为nil 选择小的
+			if l1.Val <= l2.Val {
+				v = l1.Val
+				l1 = l1.Next
+			} else {
+				v = l2.Val
+				l2 = l2.Next
+			}
+		} else if l1 != nil { //l1不为nil 则l2为nil
+			v = l1.Val
+			l1 = l1.Next
+		} else if l2 != nil { //l2不为nil 则l1为nil
+			v = l2.Val
+			l2 = l2.Next
+		}
+		node = &ListNode{
+			Val:  v,
+			Next: nil,
+		}
+		if head == nil || rear == nil {
+			head = node
+			rear = node
+		} else {
+			rear.Next = node
+			rear = rear.Next
+		}
+	}
+	return head
+}

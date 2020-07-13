@@ -30,8 +30,8 @@ func TestLevelOrder(t *testing.T) {
 	b.Right = e
 	c.Left = f
 
-	fmt.Println(maxPathSum(a))
-	//fmt.Println(res)
+	fmt.Println(levelOrder2(a))
+
 }
 
 func TestMaxDepth(t *testing.T) {
@@ -90,6 +90,9 @@ func TestConvertBiNode(t *testing.T) {
 	h := &TreeNode{
 		Val: 0,
 	}
+	i := &TreeNode{
+		Val: 0,
+	}
 
 	a.Left = b
 	a.Right = c
@@ -97,11 +100,8 @@ func TestConvertBiNode(t *testing.T) {
 	b.Right = e
 	c.Right = f
 	d.Left = h
-	aa := ConvertBiNode(a)
+	h.Left = i
+	aa := isBalanced(a)
 
-	cur := aa
-	for cur != nil {
-		fmt.Println(cur.Val)
-		cur = cur.Right
-	}
+	fmt.Println(aa)
 }

@@ -7,63 +7,42 @@ import (
 
 func TestSwapPairs(t *testing.T) {
 	a := &ListNode{
-		Val:  9,
+		Val:  1,
 		Next: nil,
 	}
-	//b := &ListNode{
-	//	Val:  8,
-	//	Next: nil,
-	//}
-	//c := &ListNode{
-	//	Val:  8,
-	//	Next: nil,
-	//}
-	//d := &ListNode{
-	//	Val:  8,
-	//	Next: nil,
-	//}
-	//e := &ListNode{
-	//	Val:  5,
-	//	Next: nil,
-	//}
-
-	a1 := &ListNode{
-		Val:  9,
+	b := &ListNode{
+		Val:  2,
 		Next: nil,
 	}
-	//b1 := &ListNode{
-	//	Val:  2,
-	//	Next: nil,
-	//}
-	//c1 := &ListNode{
-	//	Val:  2,
-	//	Next: nil,
-	//}
-	//d1 := &ListNode{
-	//	Val:  1,
-	//	Next: nil,
-	//}
-	//e1 := &ListNode{
-	//	Val:  8,
-	//	Next: nil,
-	//}
+	c := &ListNode{
+		Val:  4,
+		Next: nil,
+	}
 
-	//a.Next = b
-	//b.Next = c
-	//c.Next = d
-	//d.Next = e
+	d := &ListNode{
+		Val:  1,
+		Next: nil,
+	}
+	e := &ListNode{
+		Val:  3,
+		Next: nil,
+	}
+	f := &ListNode{
+		Val:  4,
+		Next: nil,
+	}
 
-	//a1.Next = b1
-	//b1.Next = c1
-	//c1.Next = d1
-	//d1.Next = e1
+	a.Next = b
+	b.Next = c
 
-	aa := addTwoNumbers(a, a1)
+	d.Next = e
+	e.Next = f
 
-	cur := aa
+	xx := mergeTwoLists(a, nil)
+
+	cur := xx
 	for cur != nil {
 		fmt.Println(cur.Val)
 		cur = cur.Next
 	}
-
 }

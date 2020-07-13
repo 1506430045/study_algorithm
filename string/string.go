@@ -89,3 +89,62 @@ func ss(str1, str2 string) string {
 	}
 	return build.String()
 }
+
+func commonChars(A []string) []string {
+	length := len(A)
+	res := make([]string, 0)
+	if length == 0 {
+		return res
+	}
+
+	m1 := make(map[uint8]int)
+	m2 := make(map[uint8]int)
+	for i := 0; i < len(A[0]); i++ {
+		if _, ok := m1[A[0][i]]; ok {
+			m1[A[0][i]]++
+		} else {
+			m1[A[0][i]] = 1
+		}
+	}
+	for i := 1; i < length; i++ {
+		for j := 0; j < len(A[i]); j++ {
+			if _, ok := m2[A[i][j]]; ok {
+				m2[A[i][j]]++
+			} else {
+				m2[A[i][j]] = 1
+			}
+		}
+		m1 = compare(m1, m2)
+		m2 = make(map[uint8]int, 0)
+	}
+	for v, times := range m1 {
+		for i := 0; i < times; i++ {
+			res = append(res, string(v))
+		}
+	}
+	return res
+}
+
+func compare(m1, m2 map[uint8]int) map[uint8]int {
+	for k, v1 := range m1 {
+		if v2, ok := m2[k]; ok {
+			if v2 < v1 {
+				m1[k] = v2
+			}
+		} else {
+			delete(m1, k)
+		}
+	}
+	return m1
+}
+
+func reverseLeftWords(s string, n int) string {
+	length := len(s)
+	if n >= length {
+		return s
+	}
+	builder := strings.Builder{}
+	builder.WriteString(s[n:length])
+	builder.WriteString(s[0:n])
+	return builder.String()
+}

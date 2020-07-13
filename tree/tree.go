@@ -2,6 +2,7 @@ package tree
 
 import (
 	"fmt"
+	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -519,4 +520,122 @@ func ConvertBiNode(root *TreeNode) *TreeNode {
 		}
 	}
 	return head
+}
+
+func searchBST(root *TreeNode, val int) *TreeNode {
+	if root == nil {
+		return nil
+	}
+	cur := root
+	for cur != nil {
+		if cur.Val == val {
+			return cur
+		}
+		if val < cur.Val {
+			cur = cur.Left
+		} else {
+			cur = cur.Right
+		}
+	}
+	return cur
+}
+
+func isBalanced(root *TreeNode) bool {
+	flag := true
+	dfs(root, &flag)
+	return flag
+}
+
+func dfs(node *TreeNode, flag *bool) int {
+	if node == nil || !*flag {
+		return 0
+	}
+	leftDepth := dfs(node.Left, flag) + 1
+	rightDepth := dfs(node.Right, flag) + 1
+	if math.Abs(float64(leftDepth-rightDepth)) > 1 {
+		*flag = false
+	}
+	if leftDepth > rightDepth {
+		return leftDepth
+	}
+	return rightDepth
+}
+
+func isSubStructure(A *TreeNode, B *TreeNode) bool {
+	return (A != nil && B != nil) && (recur(A, B) || isSubStructure(A.Left, B) || isSubStructure(A.Right, B))
+}
+
+func recur(A *TreeNode, B *TreeNode) bool {
+	if B == nil {
+		return true
+	}
+	if A == nil || A.Val != B.Val {
+		return false
+	}
+	return recur(A.Left, B.Left) && recur(A.Right, B.Right)
+}
+
+func InvertTree(root *TreeNode) *TreeNode {
+	doInvertTree(root)
+	return root
+}
+
+func doInvertTree(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	root.Left, root.Right = root.Right, root.Left
+	doInvertTree(root.Left)
+	doInvertTree(root.Right)
+}
+
+func mirrorTree(root *TreeNode) *TreeNode {
+	doMirrorTree(root)
+	return root
+}
+
+func doMirrorTree(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	root.Left, root.Right = root.Right, root.Left
+	doMirrorTree(root.Left)
+	doMirrorTree(root.Right)
+}
+
+func isSymmetric(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+	return checkSymmetric(root.Left, root.Right)
+}
+
+func checkSymmetric(l, r *TreeNode) bool {
+	if l == nil && r == nil {
+		return true
+	}
+	if l == nil || r == nil || l.Val != r.Val {
+		return false
+	}
+	return checkSymmetric(l.Left, r.Right) && checkSymmetric(l.Right, r.Left)
+}
+
+func levelOrder2(root *TreeNode) []int {
+	res := make([]int, 0)
+	if root == nil {
+		return res
+	}
+	q := InitQueueLink()
+	q.EnQueue(root)
+	for !q.Empty() {
+		node := q.DeQueue().Val.(*TreeNode)
+		res = append(res, node.Val)
+		if node.Left != nil {
+			q.EnQueue(node.Left)
+		}
+		if node.Right != nil {
+			q.EnQueue(node.Right)
+		}
+	}
+	return res
 }
